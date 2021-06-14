@@ -131,7 +131,7 @@ as shown in the example below:
     {
         public override void OnEnter()
         {
-            Context.SetIntesnity(1);
+            Context.SetIntensity(1);
         }
 
         public override void OnPowerButton()
