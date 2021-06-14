@@ -8,19 +8,19 @@ namespace Examples
     /*
      * Context to manipulate. In this example a flashlight, where the color of the light and the intensity can be changed.
      */
-    public class Flashlight
+    public class FlashlightController
     {
         public void TurnOn() => Console.WriteLine("Turned on.");
         public void TurnOff() => Console.WriteLine("Turned off.");
         public void SetColor(string color) => Console.WriteLine($"Set color to {color}.");
-        public void SetIntesnity(double intensity) => Console.WriteLine($"Set intensity to {intensity}");
+        public void SetIntensity(double intensity) => Console.WriteLine($"Set intensity to {intensity}");
     }
 
     /*
      * State base class. All state types have to inherit from this class.
      * All relevant events are declared here as public virtual methods
      */
-    public abstract class FlashlightState : State<Flashlight>
+    public abstract class FlashlightState : State<FlashlightController>
     {
         /*
          * Events for the color button and power button
@@ -53,6 +53,7 @@ namespace Examples
         {
             Context.TurnOn();
             SetState<RedState>();
+            SetState<FullPowerState>();
         }
 
     }
@@ -104,7 +105,7 @@ namespace Examples
     {
         public override void OnEnter()
         {
-            Context.SetIntesnity(1);
+            Context.SetIntensity(1);
         }
 
         public override void OnPowerButton()
@@ -118,7 +119,7 @@ namespace Examples
     {
         public override void OnEnter()
         {
-            Context.SetIntesnity(0.5);
+            Context.SetIntensity(0.5);
         }
 
         public override void OnPowerButton()
@@ -133,8 +134,8 @@ namespace Examples
         public static void Run()
         {
 
-            var fl = new Flashlight();
-            var sm = new StateMachine<FlashlightState, Flashlight>(fl);
+            var fl = new FlashlightController();
+            var sm = new StateMachine<FlashlightState, FlashlightController>(fl);
             sm.Start<OffState>();
 
             var run = true;
